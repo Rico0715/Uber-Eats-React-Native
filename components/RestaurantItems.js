@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, Image, TouchableOpacity,StyleSheet } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-
+import { useCart } from "../components/useCart";
 const PromotionBanner = () => (
   <View style={styles.promotionContainer}>
     <Image
@@ -47,17 +47,26 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function RestaurantItems({ showPromotion }) {
+export default function RestaurantItems({ showPromotion, addToCart, removeFromCart }) {
   return (
     <TouchableOpacity activeOpacity={0.5} style={{ marginBottom: 30 }}>
       <View style={{ marginTop: 10, padding: 15, backgroundColor: "white" }}>
         <RestaurantImage />
         <RestaurantInfo />
         {showPromotion && <PromotionBanner />}
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
+          <TouchableOpacity onPress={addToCart}>
+            <Text>Ajouter au caddie</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={removeFromCart}>
+            <Text>Retirer du caddie</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </TouchableOpacity>
   );
 }
+
 
 
 const RestaurantImage =() =>(

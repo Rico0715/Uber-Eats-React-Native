@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
+import useCart from "./useCart";
 
 export default function HeaderTabs() {
   const [activeTab, setActiveTab] = useState("Livraison");
+  const { getTotalItems } = useCart();
 
   const handleTabPress = (tab) => {
     setActiveTab(tab);
@@ -24,6 +26,9 @@ export default function HeaderTabs() {
         activeTab={activeTab}
         onPress={() => handleTabPress("A emporter")}
       />
+      <View style={{ marginLeft: 10 }}>
+        <Text style={{ color: "black" }}>{getTotalItems()} articles</Text>
+      </View>
     </View>
   );
 }
