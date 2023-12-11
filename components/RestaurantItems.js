@@ -1,7 +1,12 @@
-import React from "react";
+import React, {useRef} from "react";
 import { View, Text, Image, TouchableOpacity,StyleSheet } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { useCart } from "../components/useCart";
+import { useCart } from "./useCart";
+import Timer from "./Timer";
+import useTimer from "./hooks/UseTimer";
+import useTimerRef from "./hooks/UseTimerRef";
+import useOpeningStatus from "./hooks/UseOpeningStatus";
+
 const PromotionBanner = () => (
   <View style={styles.promotionContainer}>
     <Image
@@ -20,6 +25,7 @@ const PromotionBanner = () => (
 );
 const styles = StyleSheet.create({
   promotionContainer: {
+    marginBottom:10,
     marginTop: 10,
     padding: 15,
     backgroundColor: "#32CD32", // Couleur jaune similaire à UberEats
@@ -47,13 +53,26 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function RestaurantItems({ showPromotion, addToCart, removeFromCart }) {
+export default function RestaurantItems({ showPromotion, addToCart, removeFromCart}) {
+  const timerRef = useRef(0);
+  const remainingTime = useTimer(500);
+  const openingHours = useOpeningStatus
+  const isOpen = useOpeningStatus(openingHours);
   return (
     <TouchableOpacity activeOpacity={0.5} style={{ marginBottom: 30 }}>
       <View style={{ marginTop: 10, padding: 15, backgroundColor: "white" }}>
         <RestaurantImage />
+        
+        {/* <Timer
+          timer={timerRef.current}
+          title={"Livraison offerte pendant :"}
+        /> */}
         <RestaurantInfo />
-        {showPromotion && <PromotionBanner />}
+        {showPromotion && <PromotionBanner />}<Timer
+          
+          timer={remainingTime}
+          title={"Votre offre expire dans :"}
+        />
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
           <TouchableOpacity onPress={addToCart}>
             <Text>Ajouter au caddie</Text>
