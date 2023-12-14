@@ -6,12 +6,12 @@ import Timer from "./Timer";
 import useTimer from "./hooks/UseTimer";
 import useTimerRef from "./hooks/UseTimerRef";
 import useOpeningStatus from "./hooks/UseOpeningStatus";
-
+import { useNavigation } from "@react-navigation/native";
 const PromotionBanner = () => (
   <View style={styles.promotionContainer}>
     <Image
       source={{
-        uri: "https://example.com/promo-image.jpg", // Remplacez par l'URL de votre image de promotion
+        uri: "https://imgs.search.brave.com/kHBwSfbtnES9g8_prO69wyEGFHS8dPdAhk9cyVWGjLs/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9jZG4t/aWNvbnMtcG5nLmZs/YXRpY29uLmNvbS8x/MjgvMTA3Ny8xMDc3/MjIxLnBuZw", 
       }}
       style={styles.promotionImage}
     />
@@ -24,6 +24,18 @@ const PromotionBanner = () => (
   </View>
 );
 const styles = StyleSheet.create({
+  container: {
+    marginTop: 10,
+    padding: 15,
+    backgroundColor: 'white',
+  },
+  closedContainer: {
+    opacity: 0.5, // Griser le restaurant fermé en réduisant l'opacité
+  },
+  closedContainer: {
+    opacity: 0.5, // Opacité réduite pour les restaurants fermés
+  },
+  
   promotionContainer: {
     marginBottom:10,
     marginTop: 10,
@@ -51,22 +63,44 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "black",
   },
+  AddButton:{
+    marginLeft: 10,
+    backgroundColor: '#eee',
+    padding: 10,
+    borderRadius: 20,
+  },
+  addButtonText: {
+    backgroundColor:'#eee',
+    fontWeight: "bold",
+    color: 'black',
+    fontSize: 16,
+  },
+  RestaurantImage: {
+    borderRadius:10,
+  },
+  
 });
 
-export default function RestaurantItems({ showPromotion, addToCart, removeFromCart}) {
+export default function RestaurantItems({ showPromotion, addToCart, removeFromCart, openingHours}) {
   const timerRef = useRef(0);
   const remainingTime = useTimer(500);
-  const openingHours = useOpeningStatus
   const isOpen = useOpeningStatus(openingHours);
+  const navigation = useNavigation();
+
+  
+  
+  
   return (
     <TouchableOpacity activeOpacity={0.5} style={{ marginBottom: 30 }}>
-      <View style={{ marginTop: 10, padding: 15, backgroundColor: "white" }}>
-        <RestaurantImage />
+       <View style={[styles.container, !isOpen && styles.closedContainer]}>
         
-        {/* <Timer
-          timer={timerRef.current}
-          title={"Livraison offerte pendant :"}
-        /> */}
+        {isOpen ? (
+          <Text style={{ color: 'green' }}>Ouvert</Text>
+        ) : (
+          <Text style={{ color: 'red' }}>Fermé</Text>
+        )}
+        <RestaurantImage />{/* ... Autres éléments du restaurant ... */}
+        
         <RestaurantInfo />
         {showPromotion && <PromotionBanner />}<Timer
           
@@ -74,11 +108,11 @@ export default function RestaurantItems({ showPromotion, addToCart, removeFromCa
           title={"Votre offre expire dans :"}
         />
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
-          <TouchableOpacity onPress={addToCart}>
-            <Text>Ajouter au caddie</Text>
+          <TouchableOpacity onPress={addToCart} style={styles.AddButton}>
+            <Text style={styles.addButtonText}>Ajouter</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={removeFromCart}>
-            <Text>Retirer du caddie</Text>
+          <TouchableOpacity onPress={removeFromCart} style={styles.AddButton}>
+            <Text style={styles.addButtonText}>Retirer</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -96,6 +130,7 @@ const RestaurantImage =() =>(
     style={{ width: "100%", height: 180 }} />
     <TouchableOpacity style={{position:'absolute',right:20, top:20}}> 
       <MaterialCommunityIcons name='heart-outline' size={25} color="white"/> 
+      
     </TouchableOpacity></> 
 )
 
@@ -122,3 +157,4 @@ const RestaurantInfo =() =>(
     </View>
   </View>
 )
+    

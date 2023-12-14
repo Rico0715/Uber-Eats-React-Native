@@ -14,6 +14,7 @@ const useCart = () => {
   };
 
   const getTotalItems = () => {
+    // console.log('Cart Total:', cartTotal); // Vérifiez si cette valeur change lors de l'ajout ou la suppression
     return cartTotal;
   };
 

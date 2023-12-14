@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import useCart from "./useCart";
+import { useCartContext } from './CartContext';
 import { useNavigation } from '@react-navigation/native';
 // import LoginButton from "./LoginButton";
 import LoginScreen from "../screens/Login";
@@ -8,9 +9,9 @@ import LoginScreen from "../screens/Login";
 
 export default function HeaderTabs() {
   const [activeTab, setActiveTab] = useState("Livraison");
-  const { getTotalItems } = useCart();
+  const { getTotalItems } = useCartContext();
   const navigation = useNavigation();
-  
+
   const handleTabPress = (tab) => {
     setActiveTab(tab);
   };
@@ -41,14 +42,26 @@ export default function HeaderTabs() {
         activeTab={activeTab}
         onPress={() => handleTabPress("A emporter")}
       />
+      <TouchableOpacity style={styles.button}>
       
-      <View style={{ marginLeft: 10 }}>
-        <Text style={{ color: "black" }}>{getTotalItems()} articles</Text>
-      </View>
+      <Text style={styles.buttonText}>{getTotalItems()}🧺</Text>
+      </TouchableOpacity>
     </View>
   );
 }
-
+const styles = StyleSheet.create({
+  button: {
+    marginLeft: 10,
+    backgroundColor: '#eee',
+    padding: 10,
+    borderRadius: 20,
+  },
+  buttonText: {
+    backgroundColor:'#eee',
+    color: 'black',
+    fontSize: 16,
+  },
+})
 const HeaderButton = (props) => (
   <TouchableOpacity
     style={{
