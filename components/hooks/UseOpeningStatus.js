@@ -9,7 +9,7 @@ const useOpeningStatus = () => {
     1: { open: '09:00', close: '23:00' }, // Lundi
     2: { open: '09:00', close: '23:00' }, //mardi
     3: { open: '09:00', close: '23:00' }, //mercredi
-    4: { open: '09:00', close: '00:00' }, //jeudi
+    4: { open: '09:00', close: '23:59' }, //jeudi
     5: { open: '09:00', close: '01:00' }, //vendredi
     6: { open: '09:00', close: '18:00' }, //samedi
   };

@@ -4,7 +4,7 @@ import useCart from "./useCart";
 import { useCartContext } from './CartContext';
 import { useNavigation } from '@react-navigation/native';
 // import LoginButton from "./LoginButton";
-import LoginScreen from "../screens/Login";
+
 
 
 export default function HeaderTabs() {
@@ -17,6 +17,9 @@ export default function HeaderTabs() {
   };
   const handleLoginPress = () => {
     navigation.navigate('LoginScreen'); // Assurez-vous que 'LoginScreen' est correctement configuré dans votre système de navigation
+  };
+  const handlePanierPress = () => {
+    navigation.navigate('Mon Panier'); // Assurez-vous que 'LoginScreen' est correctement configuré dans votre système de navigation
   };
 
 
@@ -42,9 +45,10 @@ export default function HeaderTabs() {
         activeTab={activeTab}
         onPress={() => handleTabPress("A emporter")}
       />
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button}onPress={handlePanierPress}>
       
       <Text style={styles.buttonText}>{getTotalItems()}🧺</Text>
+      
       </TouchableOpacity>
     </View>
   );

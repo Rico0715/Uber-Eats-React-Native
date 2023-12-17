@@ -87,11 +87,13 @@ export default function RestaurantItems({ showPromotion, addToCart, removeFromCa
   const isOpen = useOpeningStatus(openingHours);
   const navigation = useNavigation();
 
-  
+  const handleMenuPagePress = () => {
+    navigation.navigate('MenuPage'); // Assurez-vous que 'LoginScreen' est correctement configuré dans votre système de navigation
+  };
   
   
   return (
-    <TouchableOpacity activeOpacity={0.5} style={{ marginBottom: 30 }}>
+    <TouchableOpacity onPress={handleMenuPagePress} activeOpacity={0.5} style={{ marginBottom: 30 }}>
        <View style={[styles.container, !isOpen && styles.closedContainer]}>
         
         {isOpen ? (
